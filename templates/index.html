@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Sinhala-English Idiom Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f5dd.svg" alt="key" class="logo-icon">
+                <span class="logo-text">Idiom Translator</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" onclick="showSection('translator')">Translator</button>
+                <button class="nav-btn" onclick="showSection('idiom-list')">Idiom Dictionary</button>
+                <button class="nav-btn" onclick="showSection('about')">About</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        
+        <!-- Translator Section -->
+        <section id="translator-section" class="section active">
+            <div class="translator-container">
+                
+                <!-- Language Bar -->
+                <div class="language-bar">
+                    <div class="language-select" id="source-lang-container">
+                        <button class="lang-btn active" data-lang="en">
+                             <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f1ec-1f1e7.svg" alt="british flag" class="logo-icon">
+                            <span class="lang-text">English</span>
+                        </button>
+                    </div>
+                    <button class="swap-btn" title="Swap languages" onclick="swapLanguages()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
+                        </svg>
+                    </button>
+                    <div class="language-select" id="target-lang-container">
+                        <button class="lang-btn active" data-lang="si">
+                            <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f1f1-1f1f0.svg" alt="lankan flag" class="logo-icon">
+                            <span class="lang-text">Sinhala (සිංහල)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Translation Boxes -->
+                <div class="translation-boxes">
+                    
+                    <!-- Input Box -->
+                    <div class="text-box input-box">
+                        <textarea 
+                            id="source-text" 
+                            placeholder="Enter English text..."
+                            maxlength="5000"
+                        ></textarea>
+                        <div class="text-box-footer">
+                            <span class="char-count"><span id="char-count">0</span> / 5000</span>
+                            <button class="clear-btn" onclick="clearInput()" title="Clear">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Detected Idioms -->
+                        <div id="detected-idioms" class="detected-idioms hidden">
+                            <div class="idiom-header">
+                                <span class="idiom-icon">📌</span>
+                                <span>Detected Idioms:</span>
+                            </div>
+                            <div id="idiom-tags" class="idiom-tags"></div>
+                        </div>
+                    </div>
+
+                    <!-- Output Box -->
+                    <div class="text-box output-box">
+                        <div id="translation-output" class="translation-output">
+                            <span class="placeholder-text">Translation will appear here...</span>
+                        </div>
+                        <div class="text-box-footer">
+                            <div class="translation-info">
+                                <span id="method-badge" class="method-badge hidden"></span>
+                                <!-- <span id="accuracy-badge" class="accuracy-badge hidden"></span> -->
+                            </div>
+                            <button class="copy-btn" onclick="copyTranslation()" title="Copy translation">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Translate Button -->
+                <button id="translate-btn" class="translate-btn" onclick="doTranslate()">
+                    <span class="btn-text">Translate</span>
+                    <span class="btn-loader hidden">
+                        <div class="spinner"></div>
+                    </span>
+                </button>
+
+                <!-- Example Sentences -->
+                <div class="examples">
+                    <p class="examples-title">Try these examples:</p>
+                    <div class="example-chips">
+                        <button class="example-chip" onclick="useExample(this)">
+                            That matter has now been in abeyance for a number of years.
+                        </button>
+                        <button class="example-chip" onclick="useExample(this)">
+                            Above all, be truthful.
+                        </button>
+                        <button class="example-chip" onclick="useExample(this)">
+                            The hospital and the cemetery were situated cheek by jowl.
+                        </button>
+                        <button class="example-chip" onclick="useExample(this)">
+                            His conduct has been entirely above-board.
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Idiom Dictionary Section -->
+        <section id="idiom-list-section" class="section">
+            <div class="dictionary-container">
+                <h2>📚 Idiom Dictionary</h2>
+                <p class="subtitle">All English-Sinhala idiom pairs in the system</p>
+                
+                <div class="search-box">
+                    <input type="text" id="idiom-search" placeholder="Search idioms..." oninput="filterIdioms()">
+                </div>
+                
+                <div id="idiom-dictionary" class="idiom-dictionary">
+                    <p class="loading">Loading idioms...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="section">
+            <div class="about-container">
+                <h2>About This Project</h2>
+                
+                <div class="about-card">
+                    <h3>🎯 What is this?</h3>
+                    <p>A hybrid machine translation system that correctly translates English idiomatic expressions to their Sinhala equivalents.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>⚙️ How it works</h3>
+                    <ol>
+                        <li><strong>Idiom Detection</strong> - Identifies English idioms in the input</li>
+                        <li><strong>Neural Translation</strong> - Uses NLLB-600M model for base translation</li>
+                        <li><strong>Idiom Injection</strong> - Ensures correct Sinhala idioms in output</li>
+                    </ol>
+                </div>
+                
+                <div class="about-card">
+                    <h3>🔬 Technology</h3>
+                    <ul>
+                        <li>NLLB-200-distilled-600M (Facebook/Meta)</li>
+                        <li>Hybrid NMT + Dictionary approach</li>
+                        <li>Pattern-based idiom detection</li>
+                    </ul>
+                </div>
+                
+                <div class="about-card">
+                    <h3>📊 Research Project</h3>
+                    <p>This system was developed as part of a research project on idiom-aware machine translation for low-resource languages.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

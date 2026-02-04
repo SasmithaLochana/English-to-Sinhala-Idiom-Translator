@@ -1,0 +1,572 @@
+/* ============================================
+   Sinhala-English Idiom Translator Styles
+   Google Translate-like Design
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    color: #202124;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+
+.header {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a73e8;
+}
+
+.nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #5f6368;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    background: #f1f3f4;
+}
+
+.nav-btn.active {
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* ============================================
+   Translator Section
+   ============================================ */
+
+.translator-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Language Bar */
+.language-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fafafa;
+}
+
+.language-select {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a73e8;
+    cursor: pointer;
+}
+
+.lang-btn:hover {
+    background: #e8f0fe;
+}
+
+.lang-flag {
+    font-size: 20px;
+}
+
+.swap-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    color: #5f6368;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.swap-btn:hover:not(:disabled) {
+    background: #f1f3f4;
+}
+
+.swap-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Translation Boxes */
+.translation-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 250px;
+}
+
+@media (max-width: 768px) {
+    .translation-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+
+.text-box {
+    padding: 20px;
+    position: relative;
+}
+
+.input-box {
+    border-right: 1px solid #e0e0e0;
+}
+
+@media (max-width: 768px) {
+    .input-box {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+}
+
+.text-box textarea {
+    width: 100%;
+    min-height: 150px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    line-height: 1.6;
+    resize: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+.text-box textarea::placeholder {
+    color: #9aa0a6;
+}
+
+.translation-output {
+    min-height: 150px;
+    font-size: 18px;
+    line-height: 1.6;
+    font-family: 'Noto Sans Sinhala', 'Roboto', sans-serif;
+}
+
+.translation-output .placeholder-text {
+    color: #9aa0a6;
+}
+
+.text-box-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f3f4;
+}
+
+.char-count {
+    font-size: 12px;
+    color: #9aa0a6;
+}
+
+.translation-info {
+    display: flex;
+    gap: 8px;
+}
+
+.method-badge, .accuracy-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.method-badge {
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+
+.accuracy-badge {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.clear-btn, .copy-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    color: #5f6368;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.clear-btn:hover, .copy-btn:hover {
+    background: #f1f3f4;
+}
+
+/* Detected Idioms */
+.detected-idioms {
+    margin-top: 16px;
+    padding: 12px;
+    background: #fff8e1;
+    border-radius: 8px;
+}
+
+.detected-idioms.hidden {
+    display: none;
+}
+
+.idiom-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #f57c00;
+    margin-bottom: 8px;
+}
+
+.idiom-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.idiom-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: white;
+    border-radius: 16px;
+    font-size: 13px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.idiom-tag .arrow {
+    color: #9aa0a6;
+}
+
+.idiom-tag .sinhala {
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    color: #1a73e8;
+    font-weight: 500;
+}
+
+/* Translate Button */
+.translate-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: calc(100% - 48px);
+    margin: 24px;
+    padding: 14px 32px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.translate-btn:hover {
+    background: #1557b0;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+}
+
+.translate-btn:disabled {
+    background: #9aa0a6;
+    cursor: not-allowed;
+}
+
+.btn-loader.hidden {
+    display: none;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Examples */
+.examples {
+    padding: 20px 24px;
+    background: #fafafa;
+    border-top: 1px solid #e0e0e0;
+}
+
+.examples-title {
+    font-size: 13px;
+    color: #5f6368;
+    margin-bottom: 12px;
+}
+
+.example-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.example-chip {
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 13px;
+    color: #5f6368;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.example-chip:hover {
+    background: #f1f3f4;
+    border-color: #1a73e8;
+    color: #1a73e8;
+}
+
+/* ============================================
+   Idiom Dictionary Section
+   ============================================ */
+
+.dictionary-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 32px;
+}
+
+.dictionary-container h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #5f6368;
+    margin-bottom: 24px;
+}
+
+.search-box {
+    margin-bottom: 24px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.search-box input:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.idiom-dictionary {
+    display: grid;
+    gap: 12px;
+}
+
+.idiom-card {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: #fafafa;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.idiom-card:hover {
+    background: #e8f0fe;
+}
+
+.idiom-card .english {
+    flex: 1;
+    font-weight: 500;
+}
+
+.idiom-card .arrow {
+    margin: 0 16px;
+    color: #9aa0a6;
+}
+
+.idiom-card .sinhala {
+    flex: 1;
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    color: #1a73e8;
+    text-align: right;
+}
+
+/* ============================================
+   About Section
+   ============================================ */
+
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-container h2 {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.about-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+.about-card h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: #1a73e8;
+}
+
+.about-card p {
+    color: #5f6368;
+    line-height: 1.6;
+}
+
+.about-card ol, .about-card ul {
+    color: #5f6368;
+    padding-left: 24px;
+    line-height: 1.8;
+}
+
+.about-card li {
+    margin-bottom: 8px;
+}
+
+/* ============================================
+   Toast Notification
+   ============================================ */
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: #323232;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 1000;
+    transition: all 0.3s;
+}
+
+.toast.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(20px);
+}
+
+/* ============================================
+   Utilities
+   ============================================ */
+
+.hidden {
+    display: none !important;
+}
+
+.loading {
+    text-align: center;
+    color: #9aa0a6;
+    padding: 40px;
+}
