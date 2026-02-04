@@ -7,20 +7,18 @@ A Google Translate-like web application for translating English sentences with i
 ## 📁 Project Structure
 
 ```
-idiom_translator_app/
+idiom2.0/
 ├── app.py                    # Flask backend server
 ├── hybrid_translator.py      # Translation logic
 ├── requirements.txt          # Python dependencies
+├── .gitignore               # Git ignore file
 ├── templates/
 │   └── index.html           # Frontend HTML
 ├── static/
 │   ├── style.css            # Styling
 │   └── script.js            # Frontend JavaScript
-├── models/                   # ⬅️ Put your downloaded model here
-│   ├── config.json
-│   ├── pytorch_model.bin (or model.safetensors)
-│   ├── tokenizer.json
-│   └── ...
+├── models/                   # ⬅️ Model will auto-download here
+│   └── (NLLB model files)
 └── data/
     └── idiom_mapping.json    # ⬅️ Your idiom dictionary
 ```
@@ -29,33 +27,38 @@ idiom_translator_app/
 
 ## 🚀 Setup Instructions
 
-### Step 1: Install Dependencies
+### Step 1: Clone the Repository
 
 ```bash
-cd idiom_translator_app
+git clone <your-repo-url>
+cd idiom2.0
+```
+
+### Step 2: Create Virtual Environment
+
+```powershell
+# Windows PowerShell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# Linux/Mac
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### Step 3: Install Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-### Step 2: Add Your Model
+**Note:** First run may take 5-10 minutes to download the NLLB model (~2GB) if not present in `models/` folder.
 
-**Option A: Use Downloaded Model (from Kaggle/Colab)**
+### Step 4: Verify Idiom Mapping
 
-1. Copy your model folder to `models/`
-2. Make sure it contains:
-   - `config.json`
-   - `pytorch_model.bin` or `model.safetensors`
-   - `tokenizer_config.json`
-   - `tokenizer.json` or `sentencepiece.bpe.model`
+The `data/idiom_mapping.json` file should already exist with your idiom dictionary.
 
-**Option B: Use HuggingFace Model (Auto-download)**
-
-If `models/` folder is empty, the app will automatically download `facebook/nllb-200-distilled-600M`
-
-### Step 3: Add Idiom Mapping
-
-Copy your `idiom_mapping.json` to `data/` folder.
-
-Format:
+Example format:
 ```json
 {
     "in abeyance": "අත් හිටලා",
@@ -64,15 +67,17 @@ Format:
 }
 ```
 
-### Step 4: Run the App
+### Step 5: Run the Application
 
 ```bash
 python app.py
 ```
 
-### Step 5: Open in Browser
+The server will start on **http://localhost:5000**
 
-Go to: **http://localhost:5000**
+### Step 6: Open in Browser
+
+Navigate to: **http://localhost:5000**
 
 ---
 
@@ -94,8 +99,14 @@ Go to: **http://localhost:5000**
 | `MODEL_PATH` | `models/` | Path to your model |
 | `IDIOM_MAPPING_PATH` | `data/idiom_mapping.json` | Path to idiom mapping |
 
-### Example:
-```bash
+### Setting Custom Paths:
+```powershell
+# Windows PowerShell
+$env:MODEL_PATH="D:\path\to\your\model"
+$env:IDIOM_MAPPING_PATH="D:\path\to\idiom_mapping.json"
+python app.py
+
+# Linux/Mac
 export MODEL_PATH=/path/to/your/model
 export IDIOM_MAPPING_PATH=/path/to/idiom_mapping.json
 python app.py
@@ -137,17 +148,34 @@ Response:
 
 ## 🐛 Troubleshooting
 
-### "Model not found"
-- Make sure model files are in `models/` folder
-- Or let it download automatically (needs internet)
+### "Model not found" or First Run is Slow
+- First run will automatically download `facebook/nllb-200-distilled-600M` (~2GB)
+- Requires internet connection
+- Downloaded model will be cached in `models/` folder for future use
 
 ### "CUDA out of memory"
-- The app will auto-use CPU if GPU is not available
-- Or set: `device='cpu'` in `hybrid_translator.py`
+- The app will automatically use CPU if GPU is not available
+- You can force CPU by setting `device='cpu'` in [hybrid_translator.py](hybrid_translator.py)
 
 ### "Idiom not detected"
-- Check `idiom_mapping.json` contains the idiom
+- Verify the idiom exists in [data/idiom_mapping.json](data/idiom_mapping.json)
 - Idiom matching is case-insensitive
+- Check spelling and exact phrasing
+
+### Virtual Environment Issues (Windows)
+```powershell
+# If activation is blocked by execution policy
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Then activate again
+.\.venv\Scripts\Activate.ps1
+```
+
+### Port Already in Use
+```bash
+# Change port in app.py (bottom of file)
+app.run(debug=True, port=5001)  # Use different port
+```
 
 ---
 
